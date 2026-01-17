@@ -4,7 +4,7 @@ import 'package:stock_management/providers/category_provider.dart';
 import 'package:stock_management/providers/product_provider.dart';
 import 'package:stock_management/providers/stock_movement_provider.dart';
 import 'package:stock_management/providers/dashboard_provider.dart';
-import 'package:stock_management/ui/login_screen.dart';
+import 'package:stock_management/ui/splash_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
         title: 'Stock Management',
         debugShowCheckedModeBanner: false,
         theme: ThemeData(primarySwatch: Colors.blue, useMaterial3: true),
-        home: const LoginScreen(),
+        home: const SplashScreen(),
       ),
     );
   }
