@@ -1,4 +1,4 @@
-# Stock Management System
+# Wareef - A Stock Management app
 
 A comprehensive and modern stock management application built with Flutter. This project provides a robust solution for tracking inventory, managing products and categories, and monitoring stock movements in real-time.
 
