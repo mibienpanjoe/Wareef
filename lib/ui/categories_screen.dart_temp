@@ -1,0 +1,132 @@
+class _CategoryTile extends StatelessWidget {
+  final Category category;
+  final List<Product> products;
+  final Color iconBgColor;
+  final VoidCallback onUpdate;
+  final VoidCallback onDelete;
+
+  const _CategoryTile({
+    required this.category,
+    required this.products,
+    required this.iconBgColor,
+    required this.onUpdate,
+    required this.onDelete,
+  });
+
+  String _calculateTotalValue() {
+    double total = 0;
+    for (var product in products) {
+      total += product.price * product.stockQuantity;
+    }
+    final formatter = NumberFormat('#,###', 'en_US');
+    return '${formatter.format(total).replaceAll(',', '.')} F';
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => CategoryDetailScreen(category: category),
+          ),
+        );
+      },
+      child: Container(
+        margin: const EdgeInsets.only(bottom: 12),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(16),
+          border: Border.all(color: Colors.grey[100]!),
+        ),
+        child: ListTile(
+          contentPadding: const EdgeInsets.all(12),
+          leading: Container(
+            width: 48,
+            height: 48,
+            decoration: BoxDecoration(
+              color: iconBgColor,
+              borderRadius: BorderRadius.circular(12),
+              image: category.imageUrl != null
+                  ? DecorationImage(
+                      image: NetworkImage(
+                        '${ApiService.baseUrl}${category.imageUrl}',
+                      ),
+                      fit: BoxFit.cover,
+                    )
+                  : null,
+            ),
+            child: category.imageUrl == null
+                ? const Icon(
+                    Icons.category_outlined,
+                    color: Color(0xFF1E293B),
+                    size: 24,
+                  )
+                : null,
+          ),
+          title: Text(
+            category.name,
+            style: const TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+              color: Color(0xFF1E293B),
+            ),
+          ),
+          subtitle: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              if (category.description != null &&
+                  category.description!.isNotEmpty) ...[
+                const SizedBox(height: 4),
+                Text(
+                  category.description!,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(color: Colors.grey[500], fontSize: 13),
+                ),
+              ],
+              const SizedBox(height: 4),
+              Text(
+                '${products.length} items • ${_calculateTotalValue()} F',
+                style: TextStyle(color: Colors.grey[500], fontSize: 13),
+              ),
+            ],
+          ),
+          trailing: PopupMenuButton<String>(
+            icon: const Icon(Icons.more_vert, color: Colors.grey),
+            onSelected: (value) {
+              if (value == 'update') {
+                onUpdate();
+              } else if (value == 'delete') {
+                onDelete();
+              }
+            },
+            itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
+              const PopupMenuItem<String>(
+                value: 'update',
+                child: Row(
+                  children: [
+                    Icon(Icons.edit, color: Colors.blue, size: 20),
+                    SizedBox(width: 8),
+                    Text('Update'),
+                  ],
+                ),
+              ),
+              const PopupMenuItem<String>(
+                value: 'delete',
+                child: Row(
+                  children: [
+                    Icon(Icons.delete, color: Colors.red, size: 20),
+                    SizedBox(width: 8),
+                    Text('Delete'),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
