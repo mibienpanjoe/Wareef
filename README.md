@@ -2,6 +2,8 @@
 
 A comprehensive and modern stock management application built with Flutter. This project provides a robust solution for tracking inventory, managing products and categories, and monitoring stock movements in real-time.
 
+![App Preview](assets/previews/app_preview.png)
+
 ## 🚀 Features
 
 - **Advanced Dashboard**: Get a birds-eye view of your inventory with real-time metrics including total stock value, category distribution, and recent activity logs.
