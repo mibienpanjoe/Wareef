@@ -48,7 +48,7 @@ To run this project locally:
     Ensure your backend API is running and update the `ApiService` with the correct base URL.
     Here is the backend :
     ```bash
-    git clone
+    git clone https://github.com/mibienpanjoe/stock-management-api.git
     ```
 5.  **Run the application**:
     ```bash
